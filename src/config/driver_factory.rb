@@ -31,8 +31,8 @@ class DriverFactory include SetupProperties
 		end
 	end
 	def instantiate_webdriver( driver_type )
-		desired_capabilities = Selenium::WebDriver::Remote::Capabilities.new
-		@selected_driver_type.call( desired_capabilities )
+		#capabilities = Selenium::WebDriver::Remote::Capabilities.chrome
+		@selected_driver_type.call
 	end
 	private :instantiate_webdriver
 end
