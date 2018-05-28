@@ -26,11 +26,16 @@ class DriverType include SetupProperties
 		options.add_preference( "profile.password_manager_enabled", false )
 		#capabilities = Selenium::WebDriver::Remote::Capabilities.chrome( "chromeOptions" => { "args" => [ "disable-infobars" ], "binary" => "#{driver_path}" } )
 		#capabilities = Selenium::WebDriver::Remote::Capabilities.chrome( "version" => "2.38", "chromeOptions" => { "binary" => "#{driver_path}", "args" => [ "disable-infobars" ] } )
-		capabilities = Selenium::WebDriver::Remote::Capabilities.chrome( "chromeOptions" => { "binary" => "#{driver_path}" } )
+		#capabilities = Selenium::WebDriver::Remote::Capabilities.chrome( "chromeOptions" => { "binary" => "#{driver_path}" } )
 		#capabilities.version = "2.38"
 		#capabilities.platform = :win
 		#Selenium::WebDriver.for :chrome, options: options
-		Selenium::WebDriver.for( :remote, url: "http://localhost:4444/wd/hub", desired_capabilities: :chrome )
+		if SetupProperties.get_property( :headless )
+			@caps = Selenium::WebDriver::Remote::Capabilities.chrome( "chromeOptions" => { "args" => [ "--headless" ] } )
+		else
+			@caps = Selenium::WebDriver::Remote::Capabilities.chrome
+		end
+		Selenium::WebDriver.for( :remote, url: SetupProperties.get_property( :selenium_hub_url ), desired_capabilities: @caps )
 	end )
 	private_class_method :add_webdriver_object
 end

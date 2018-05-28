@@ -31,8 +31,8 @@ class DriverFactory include SetupProperties
 		end
 	end
 	def instantiate_webdriver( driver_type )
-		#capabilities = Selenium::WebDriver::Remote::Capabilities.chrome
-		@selected_driver_type.call
+		#capabilities = Selenium::WebDriver::Remote::Capabilities.chrome( "version" => SetupProperties.get_property( :version ), "chromeOptions" => { "binary" => "#{driver_path}", "args" => [ "disable-infobars" ] } )
+		driver_type.call
 	end
 	private :instantiate_webdriver
 end
