@@ -9,8 +9,8 @@ module SetupProperties
 	def self.set_property( key, value )
 		@properties[key] = value unless @properties[key].nil?
 	end
-	project_path = "C:/Users/rubem.koyanagui/eclipse-workspace/PSelenium"
-	self.add_property( :browser, "chrome" )
+	project_path = "./."
+	self.add_property( :browser, "firefox" )
 	self.add_property( :version, "66" )
 	self.add_property( :platform, "windows" )
 	self.add_property( :threads, "1" )

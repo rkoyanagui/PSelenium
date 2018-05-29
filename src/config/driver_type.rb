@@ -6,36 +6,13 @@ class DriverType include SetupProperties
 	def self.get_webdriver_object( browser )
 		@hash[browser]
 	end
-	self.add_webdriver_object( :FIREFOX, Proc.new do |capabilities|
-		driver_path = File.expand_path( SetupProperties.get_property( :firefox_driver_path ) )
-		Selenium::WebDriver::Firefox.driver_path = driver_path
-		options = Selenium::WebDriver::Firefox::Options.new
-		#options.merge( capabilities )
-		options.headless! if SetupProperties.get_property( :headless )
-		Selenium::WebDriver.for :firefox, options: options
+	self.add_webdriver_object( :FIREFOX, Proc.new do
+		profile = Selenium::WebDriver::Firefox::Profile.from_name "default"
+		caps = Selenium::WebDriver::Remote::Capabilities.firefox(firefox_profile: profile)
+		Selenium::WebDriver.for( :remote, url: SetupProperties.get_property( :selenium_hub_url ), desired_capabilities: caps )
 	end )
 	self.add_webdriver_object( :CHROME, Proc.new do
-		#chrome_preferences = { "profile.password_manager_enabled" => false }
-		driver_path = File.expand_path( SetupProperties.get_property( :chrome_driver_path ) )
-		Selenium::WebDriver::Chrome.driver_path = driver_path
-		options = Selenium::WebDriver::Chrome::Options.new
-		#options.merge( capabilities )
-		options.binary = driver_path
-		options.headless! if SetupProperties.get_property( :headless )
-		options.add_argument( "--no-default-browser-check" )
-		options.add_preference( "profile.password_manager_enabled", false )
-		#capabilities = Selenium::WebDriver::Remote::Capabilities.chrome( "chromeOptions" => { "args" => [ "disable-infobars" ], "binary" => "#{driver_path}" } )
-		#capabilities = Selenium::WebDriver::Remote::Capabilities.chrome( "version" => "2.38", "chromeOptions" => { "binary" => "#{driver_path}", "args" => [ "disable-infobars" ] } )
-		#capabilities = Selenium::WebDriver::Remote::Capabilities.chrome( "chromeOptions" => { "binary" => "#{driver_path}" } )
-		#capabilities.version = "2.38"
-		#capabilities.platform = :win
-		#Selenium::WebDriver.for :chrome, options: options
-		if SetupProperties.get_property( :headless )
-			@caps = Selenium::WebDriver::Remote::Capabilities.chrome( "chromeOptions" => { "args" => [ "--headless" ] } )
-		else
-			@caps = Selenium::WebDriver::Remote::Capabilities.chrome
-		end
-		Selenium::WebDriver.for( :remote, url: SetupProperties.get_property( :selenium_hub_url ), desired_capabilities: @caps )
+		Selenium::WebDriver.for( :remote, url: SetupProperties.get_property( :selenium_hub_url ), desired_capabilities: :chrome )
 	end )
 	private_class_method :add_webdriver_object
 end
