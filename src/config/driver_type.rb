@@ -7,9 +7,7 @@ class DriverType include SetupProperties
 		@hash[browser]
 	end
 	self.add_webdriver_object( :FIREFOX, Proc.new do
-		profile = Selenium::WebDriver::Firefox::Profile.from_name "default"
-		caps = Selenium::WebDriver::Remote::Capabilities.firefox(firefox_profile: profile)
-		Selenium::WebDriver.for( :remote, url: SetupProperties.get_property( :selenium_hub_url ), desired_capabilities: caps )
+		Selenium::WebDriver.for( :remote, url: SetupProperties.get_property( :selenium_hub_url ), desired_capabilities: :firefox )
 	end )
 	self.add_webdriver_object( :CHROME, Proc.new do
 		Selenium::WebDriver.for( :remote, url: SetupProperties.get_property( :selenium_hub_url ), desired_capabilities: :chrome )

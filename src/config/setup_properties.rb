@@ -10,13 +10,14 @@ module SetupProperties
 		@properties[key] = value unless @properties[key].nil?
 	end
 	project_path = "./."
-	self.add_property( :browser, "firefox" )
+	self.add_property( :browser, "chrome" )
 	self.add_property( :version, "66" )
 	self.add_property( :platform, "windows" )
 	self.add_property( :threads, "1" )
 	self.add_property( :remote, false )
 	self.add_property( :headless, true )
 	self.add_property( :proxy_enabled, false )
+	self.add_property( :screenshot_path, "#{project_path}/screenshots" )
 	self.add_property( :selenium_hub_url, "http://localhost:4444/wd/hub" )
 	self.add_property( :selenium_server_path, "#{project_path}/resources/selenium_server_standalone/selenium-server-standalone-3.9.1.jar" )
 	self.add_property( :firefox_driver_path, "#{project_path}/resources/selenium_standalone_binaries/windows/marionette/64bit/geckodriver.exe" )

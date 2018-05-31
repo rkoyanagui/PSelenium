@@ -4,7 +4,9 @@ require "rubygems"
 require "selenium-webdriver"
 require "rspec"
 include RSpec::Matchers
+#include Selenium::WebDriver::DriverExtensions::TakesScreenshot
 require File.expand_path("./src/config/setup_properties")
+require File.expand_path("./src/config/screenshot")
 require File.expand_path("./src/config/driver_type")
 require File.expand_path("./src/config/driver_factory")
 require File.expand_path("./src/config/driver_base")

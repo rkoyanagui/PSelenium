@@ -1,4 +1,5 @@
 require File.expand_path("././pilot.rb")
+include Screenshot
 
 describe "Google something" do
 	context "Milk" do
@@ -12,6 +13,7 @@ describe "Google something" do
 				@driver.find_element( id: "search" ).displayed?
 			end
 			RSpec::Matchers.expect( @driver.title ).to eq( "milk - Pesquisa Google" )
+			take_screenshot( "google_milk" )
 		end
 	end
 end
